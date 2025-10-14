@@ -22,12 +22,13 @@ export function NavFooter({
             className={`group-data-[collapsible=icon]:p-0 ${className || ''}`}
         >
             <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu className="gap-1 px-2">
                     {items.map((item) => (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton
                                 asChild
-                                className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+                                size="lg"
+                                className="h-10 px-3 text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
                             >
                                 <a
                                     href={
@@ -44,7 +45,7 @@ export function NavFooter({
                                             className="h-5 w-5"
                                         />
                                     )}
-                                    <span>{item.title}</span>
+                                    <span className="font-medium">{item.title}</span>
                                 </a>
                             </SidebarMenuButton>
                         </SidebarMenuItem>

@@ -1,17 +1,128 @@
-import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { Search, Sun, Moon, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { UserMenuContent } from '@/components/user-menu-content';
+import { useInitials } from '@/hooks/use-initials';
+import { cn } from '@/lib/utils';
+import { type SharedData } from '@/types';
+import { useState, useEffect } from 'react';
+
+const navItems = [
+    { title: 'Overview', href: '/dashboard' },
+    { title: 'Customers', href: '/customers' },
+    { title: 'Products', href: '/products' },
+    { title: 'Settings', href: '/settings' },
+];
 
 export function AppSidebarHeader({
     breadcrumbs = [],
 }: {
     breadcrumbs?: BreadcrumbItemType[];
 }) {
+    const page = usePage<SharedData>();
+    const { auth } = page.props;
+    const getInitials = useInitials();
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+    useEffect(() => {
+        const isDark = document.documentElement.classList.contains('dark');
+        setTheme(isDark ? 'dark' : 'light');
+    }, []);
+
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        document.documentElement.classList.toggle('dark');
+    };
+
     return (
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-sidebar-border/50 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
-            <div className="flex items-center gap-2">
+        <header className="flex h-14 shrink-0 items-center justify-between border-b border-sidebar-border/50 px-4 transition-[width,height] ease-linear">
+            <div className="flex items-center gap-6">
                 <SidebarTrigger className="-ml-1" />
-                <Breadcrumbs breadcrumbs={breadcrumbs} />
+                
+                {/* Navigation Items */}
+                <nav className="hidden md:flex items-center gap-1">
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={cn(
+                                'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
+                                page.url === item.href
+                                    ? 'text-foreground'
+                                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                            )}
+                        >
+                            {item.title}
+                        </Link>
+                    ))}
+                </nav>
+            </div>
+
+            <div className="flex items-center gap-2">
+                {/* Search Input */}
+                <div className="relative hidden sm:block">
+                    <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                        type="search"
+                        placeholder="Search"
+                        className="h-9 w-[200px] pl-8 pr-12 bg-background"
+                    />
+                    <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                        ⌘K
+                    </kbd>
+                </div>
+
+                {/* Theme Toggle */}
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9"
+                    onClick={toggleTheme}
+                >
+                    {theme === 'light' ? (
+                        <Sun className="h-4 w-4" />
+                    ) : (
+                        <Moon className="h-4 w-4" />
+                    )}
+                </Button>
+
+                {/* Settings */}
+                <Button variant="ghost" size="icon" className="h-9 w-9">
+                    <Settings className="h-4 w-4" />
+                </Button>
+
+                {/* User Avatar */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            className="h-9 w-9 rounded-full p-0"
+                        >
+                            <Avatar className="h-8 w-8">
+                                <AvatarImage
+                                    src={auth.user.avatar}
+                                    alt={auth.user.name}
+                                />
+                                <AvatarFallback className="text-xs bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                    {getInitials(auth.user.name)}
+                                </AvatarFallback>
+                            </Avatar>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56" align="end">
+                        <UserMenuContent user={auth.user} />
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </header>
     );

@@ -1,4 +1,3 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -13,7 +12,18 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { 
+    LayoutGrid, 
+    MapPinHouse,
+    Settings,
+    HelpCircle,
+    House,
+    UsersRound,
+    HandCoins,
+    Receipt,
+    ChartLine,
+    Bell
+    } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -21,19 +31,102 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
-    },
+    }
 ];
 
-const footerNavItems: NavItem[] = [
+const propertyNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        title: 'Properti',
+        href: '/tasks',
+        icon: MapPinHouse,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Kamar / Unit',
+        href: '/apps',
+        icon: House,
+    }
+];
+
+const tenantNavItems: NavItem[] = [
+   {
+        title: 'Penyewa',
+        href: '/tenants',
+        icon: UsersRound,
+        items: [
+            {
+                title: 'Daftar Penyewa',
+                href: '/tenants/list',
+            },
+            {
+                title: 'Penyewa Aktif',
+                href: '/tenants/active',
+            },
+            {
+                title: 'Penyewa Tidak Aktif',
+                href: '/tenants/inactive',
+            },
+        ],
+    }
+];
+
+const financeNavItems: NavItem[] = [
+    {
+        title: 'Tagihan',
+        href: '/finance/billing',
+        icon: Receipt,
+        items: [
+            {
+                title: 'Semua Tagihan',
+                href: '/finance/billing',
+            },
+            {
+                title: 'Belum Lunas',
+                href: '/finance/billing/unpaid',
+            },
+            {
+                title: 'Jatuh Tempo',
+                href: '/finance/billing/due-soon',
+            },
+            {
+                title: 'Sudah Lunas',
+                href: '/finance/billing/paid',
+            },
+        ],
+    },
+    {
+        title: 'Pembayaran',
+        href: '/finance/payments',
+        icon: HandCoins,
+        items: [
+            {
+                title: 'Riwayat Pembayaran',
+                href: '/finance/payments/history',
+            },
+            {
+                title: 'Konfirmasi Pembayaran',
+                href: '/finance/payments/confirmations',
+            },
+        ],
+    },
+    {
+        title: 'Laporan Keuangan',
+        href: '/finance/reports',
+        icon: ChartLine,
+    }
+];
+
+
+const otherNavItems: NavItem[] = [
+    {
+        title: 'Notifikasi',
+        href: '/settings',
+        icon: Bell
+    },
+    {
+        title: 'Pengaturan',
+        href: '/help',
+        icon: Settings,
+        hasChevron: true,
     },
 ];
 
@@ -53,11 +146,14 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={mainNavItems} label="General" />
+                <NavMain items={propertyNavItems} label="Properti" />
+                <NavMain items={tenantNavItems} label="Penyewa" />
+                <NavMain items={financeNavItems} label="Keuangan" />
+                <NavMain items={otherNavItems} label="Other" />
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
