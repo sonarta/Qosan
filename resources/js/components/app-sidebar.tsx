@@ -37,12 +37,12 @@ const mainNavItems: NavItem[] = [
 const propertyNavItems: NavItem[] = [
     {
         title: 'Properti',
-        href: '/tasks',
+        href: '/properties',
         icon: MapPinHouse,
     },
     {
         title: 'Kamar / Unit',
-        href: '/apps',
+        href: '/rooms',
         icon: House,
     }
 ];
