@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        // Create Admin User
         User::firstOrCreate(
             ['email' => 'admin@example.com'],
             [
@@ -22,6 +23,17 @@ class DatabaseSeeder extends Seeder
                 'password' => 'password',
                 'email_verified_at' => now(),
                 'role' => 'admin',
+            ]
+        );
+
+        // Create Owner User
+        User::firstOrCreate(
+            ['email' => 'owner@example.com'],
+            [
+                'name' => 'Owner User',
+                'password' => 'password',
+                'email_verified_at' => now(),
+                'role' => 'owner',
             ]
         );
     }

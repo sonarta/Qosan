@@ -51,11 +51,37 @@ export function AppSidebarHeader({
         document.documentElement.classList.toggle('dark');
     };
 
+    // Get page title from breadcrumbs or URL
+    const getPageTitle = () => {
+        if (breadcrumbs.length > 0) {
+            return breadcrumbs[breadcrumbs.length - 1].title;
+        }
+        
+        // Fallback to URL-based title
+        const path = page.url.split('?')[0];
+        const segments = path.split('/').filter(Boolean);
+        
+        if (segments.length === 0) return 'Dashboard';
+        
+        const lastSegment = segments[segments.length - 1];
+        return lastSegment
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    };
+
     return (
         <header className="flex h-14 shrink-0 items-center justify-between border-b border-sidebar-border/50 px-4 transition-[width,height] ease-linear">
             <div className="flex items-center gap-6">
                 <SidebarTrigger className="-ml-1" />
                 
+                  {/* Page Title */}
+                <div className="hidden md:block">
+                    <h1 className="text-sm font-semibold text-foreground">
+                        {getPageTitle()}
+                    </h1>
+                </div>
+
                 {/* Role Switcher for Admin */}
                 {isAdmin && onViewModeChange && (
                     <DropdownMenu>
