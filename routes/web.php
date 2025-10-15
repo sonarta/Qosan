@@ -8,7 +8,32 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    // Dynamic dashboard based on role
+    Route::get('dashboard', function () {
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return app(\App\Http\Controllers\DashboardController::class)->index();
+    })->name('dashboard');
+
+    // Admin Routes
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+        
+        // Owner Management
+        Route::resource('owners', \App\Http\Controllers\Admin\OwnerController::class);
+        Route::patch('owners/{owner}/suspend', [\App\Http\Controllers\Admin\OwnerController::class, 'suspend'])->name('owners.suspend');
+        Route::patch('owners/{owner}/activate', [\App\Http\Controllers\Admin\OwnerController::class, 'activate'])->name('owners.activate');
+        Route::patch('owners/{owner}/change-subscription', [\App\Http\Controllers\Admin\OwnerController::class, 'changeSubscription'])->name('owners.change-subscription');
+        
+        // Properties (Read-only)
+        Route::get('properties', [\App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('properties.index');
+        Route::get('properties/{property}', [\App\Http\Controllers\Admin\PropertyController::class, 'show'])->name('properties.show');
+        
+        // Tenants (Read-only)
+        Route::get('tenants', [\App\Http\Controllers\Admin\TenantController::class, 'index'])->name('tenants.index');
+        Route::get('tenants/{tenant}', [\App\Http\Controllers\Admin\TenantController::class, 'show'])->name('tenants.show');
+    });
 
     Route::resource('properties', \App\Http\Controllers\PropertyController::class);
     Route::resource('rooms', \App\Http\Controllers\RoomController::class);

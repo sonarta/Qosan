@@ -36,35 +36,35 @@ const mainNavItems: NavItem[] = [
 const userManagementNavItems: NavItem[] = [
    {
         title: 'Owners',
-        href: '/owners',
+        href: '/admin/owners',
         icon: UsersRound,
         items: [
             {
                 title: 'Semua Owners',
-                href: '/owners',
+                href: '/admin/owners',
             },
             {
                 title: 'Owners Aktif',
-                href: '/owners/active',
+                href: '/admin/owners?status=active',
             },
             {
                 title: 'Owners Suspended',
-                href: '/owners/suspended',
+                href: '/admin/owners?status=suspended',
             },
             {
                 title: 'Pending Approval',
-                href: '/owners/pending',
+                href: '/admin/owners?status=pending',
             }
         ],
     },
     {
         title: 'Properti',
-        href: '/properties',
+        href: '/admin/properties',
         icon: MapPinHouse,
     },
      {
         title: 'Penyewa',
-        href: '/tenants',
+        href: '/admin/tenants',
         icon: House,
     }
 ];
