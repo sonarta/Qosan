@@ -109,6 +109,83 @@ export interface Room {
     images?: RoomImage[];
 }
 
+export interface Tenant {
+    id: number;
+    room_id: number;
+    name: string;
+    email?: string;
+    phone: string;
+    id_card_number?: string;
+    address?: string;
+    check_in_date: string;
+    check_out_date?: string;
+    is_active: boolean;
+    notes?: string;
+    created_at: string;
+    updated_at: string;
+    room?: Room;
+}
+
+export interface BillItem {
+    id: number;
+    bill_id: number;
+    description: string;
+    amount: number;
+    quantity: number;
+    total: number;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Bill {
+    id: number;
+    tenant_id: number;
+    bill_number: string;
+    bill_date: string;
+    due_date: string;
+    period_start: string;
+    period_end: string;
+    subtotal: number;
+    total: number;
+    status: 'unpaid' | 'paid' | 'overdue' | 'cancelled';
+    notes?: string;
+    created_at: string;
+    updated_at: string;
+    tenant?: Tenant;
+    items?: BillItem[];
+    payments?: Payment[];
+}
+
+export interface Payment {
+    id: number;
+    bill_id: number;
+    payment_number: string;
+    amount: number;
+    payment_date: string;
+    payment_method?: string;
+    proof_image?: string;
+    status: 'pending' | 'confirmed' | 'rejected';
+    notes?: string;
+    confirmed_at?: string;
+    confirmed_by?: number;
+    created_at: string;
+    updated_at: string;
+    bill?: Bill;
+    confirmedBy?: User;
+}
+
+export interface BillingSetting {
+    id: number;
+    auto_generate_enabled: boolean;
+    generation_day: number;
+    due_days: number;
+    send_email_notification: boolean;
+    send_sms_notification: boolean;
+    email_template?: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface PaginatedData<T> {
     data: T[];
     current_page: number;

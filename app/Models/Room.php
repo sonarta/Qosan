@@ -55,4 +55,14 @@ class Room extends Model
     {
         return $this->hasOne(RoomImage::class)->where('is_primary', true);
     }
+
+    public function tenants(): HasMany
+    {
+        return $this->hasMany(Tenant::class);
+    }
+
+    public function activeTenant()
+    {
+        return $this->hasOne(Tenant::class)->where('is_active', true);
+    }
 }

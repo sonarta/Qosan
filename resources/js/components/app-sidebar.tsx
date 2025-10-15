@@ -55,15 +55,15 @@ const tenantNavItems: NavItem[] = [
         items: [
             {
                 title: 'Daftar Penyewa',
-                href: '/tenants/list',
+                href: '/tenants',
             },
             {
                 title: 'Penyewa Aktif',
-                href: '/tenants/active',
+                href: '/tenants?status=active',
             },
             {
                 title: 'Penyewa Tidak Aktif',
-                href: '/tenants/inactive',
+                href: '/tenants?status=inactive',
             },
         ],
     }
@@ -72,39 +72,39 @@ const tenantNavItems: NavItem[] = [
 const financeNavItems: NavItem[] = [
     {
         title: 'Tagihan',
-        href: '/finance/billing',
+        href: '/bills',
         icon: Receipt,
         items: [
             {
                 title: 'Semua Tagihan',
-                href: '/finance/billing',
+                href: '/bills',
             },
             {
                 title: 'Belum Lunas',
-                href: '/finance/billing/unpaid',
+                href: '/bills?status=unpaid',
             },
             {
                 title: 'Jatuh Tempo',
-                href: '/finance/billing/due-soon',
+                href: '/bills?status=overdue',
             },
             {
                 title: 'Sudah Lunas',
-                href: '/finance/billing/paid',
+                href: '/bills?status=paid',
             },
         ],
     },
     {
         title: 'Pembayaran',
-        href: '/finance/payments',
+        href: '/payments',
         icon: HandCoins,
         items: [
             {
                 title: 'Riwayat Pembayaran',
-                href: '/finance/payments/history',
+                href: '/payments',
             },
             {
-                title: 'Konfirmasi Pembayaran',
-                href: '/finance/payments/confirmations',
+                title: 'Menunggu Konfirmasi',
+                href: '/payments/pending/list',
             },
         ],
     },
