@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -54,5 +55,15 @@ class User extends Authenticatable
     public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class)->where('status', 'active');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
     }
 }

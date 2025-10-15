@@ -20,7 +20,8 @@ import {
     HandCoins,
     Receipt,
     ChartLine,
-    Bell
+    Crown,
+    Settings
     } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -32,93 +33,136 @@ const mainNavItems: NavItem[] = [
     }
 ];
 
-const propertyNavItems: NavItem[] = [
+const userManagementNavItems: NavItem[] = [
+   {
+        title: 'Owners',
+        href: '/owners',
+        icon: UsersRound,
+        items: [
+            {
+                title: 'Semua Owners',
+                href: '/owners',
+            },
+            {
+                title: 'Owners Aktif',
+                href: '/owners/active',
+            },
+            {
+                title: 'Owners Suspended',
+                href: '/owners/suspended',
+            },
+            {
+                title: 'Pending Approval',
+                href: '/owners/pending',
+            }
+        ],
+    },
     {
         title: 'Properti',
         href: '/properties',
         icon: MapPinHouse,
     },
-    {
-        title: 'Kamar / Unit',
-        href: '/rooms',
+     {
+        title: 'Penyewa',
+        href: '/tenants',
         icon: House,
     }
 ];
 
-const tenantNavItems: NavItem[] = [
+const subscriptionNavItems: NavItem[] = [
    {
-        title: 'Penyewa',
-        href: '/tenants',
-        icon: UsersRound,
+        title: 'Paket Langganan',
+        href: '/packages',
+        icon: Receipt,
         items: [
             {
-                title: 'Daftar Penyewa',
-                href: '/tenants',
+                title: 'Daftar Paket',
+                href: '/packages',
             },
             {
-                title: 'Penyewa Aktif',
-                href: '/tenants?status=active',
-            },
-            {
-                title: 'Penyewa Tidak Aktif',
-                href: '/tenants?status=inactive',
-            },
+                title: 'Buat Paket Baru',
+                href: '/packages/create',
+            }
         ],
+    },
+    {
+        title: 'Subscriptions',
+        href: '/subscriptions',
+        icon: Receipt,
+        items: [
+            {
+                title: 'Semua Subscriptions',
+                href: '/subscriptions',
+            },
+            {
+                title: 'Aktif',
+                href: '/subscriptions/active',
+            },
+            {
+                title: 'Akan Expire',
+                href: '/subscriptions/expiring',
+            },
+            {
+                title: 'Expired',
+                href: '/subscriptions/expired',
+            }
+        ],
+    },
+    {
+        title: 'Payment History',
+        href: '/payments',
+        icon: HandCoins,
     }
 ];
 
 const financeNavItems: NavItem[] = [
     {
-        title: 'Tagihan',
-        href: '/bills',
-        icon: Receipt,
-        items: [
-            {
-                title: 'Semua Tagihan',
-                href: '/bills',
-            },
-            {
-                title: 'Belum Lunas',
-                href: '/bills?status=unpaid',
-            },
-            {
-                title: 'Jatuh Tempo',
-                href: '/bills?status=overdue',
-            },
-            {
-                title: 'Sudah Lunas',
-                href: '/bills?status=paid',
-            },
-        ],
-    },
-    {
-        title: 'Pembayaran',
-        href: '/payments',
-        icon: HandCoins,
-        items: [
-            {
-                title: 'Riwayat Pembayaran',
-                href: '/payments',
-            },
-            {
-                title: 'Menunggu Konfirmasi',
-                href: '/payments/pending/list',
-            },
-        ],
-    },
-    {
-        title: 'Laporan Keuangan',
-        href: '/finance/reports',
+        title: 'Revenue Report',
+        href: '/revenue-report',
         icon: ChartLine,
-    }
+    },
+    {
+        title: 'Platform Analytics',
+        href: '/platform-analytics',
+        icon: ChartLine,
+    },
+    {
+        title: 'Churn Analysis',
+        href: '/churn-analysis',
+        icon: ChartLine,
+    },
 ];
 
 
 const otherNavItems: NavItem[] = [
     {
-        title: 'Notifikasi',
+        title: 'Settings',
         href: '/settings',
-        icon: Bell
+        icon: Settings,
+        items: [
+            {
+                title: 'General Settings',
+                href: '/settings',
+            },
+            {
+                title: 'Email Templates',
+                href: '/settings',
+            },
+            {
+                title: 'Notification Settings',
+                href: '/settings',
+            }
+        ]
+    },
+    {
+        title: 'Activity Logs',
+        href: '/activity-logs',
+        icon: ChartLine,
+    },
+    {
+        title: 'Admin Users',
+        href: '/admin-users',
+        icon: Crown,
     }
 ];
 
@@ -139,8 +183,8 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} label="General" />
-                <NavMain items={propertyNavItems} label="Properti" />
-                <NavMain items={tenantNavItems} label="Penyewa" />
+                <NavMain items={userManagementNavItems} label="User Management" />
+                <NavMain items={subscriptionNavItems} label="Subscription" />
                 <NavMain items={financeNavItems} label="Keuangan" />
                 <NavMain items={otherNavItems} label="Other" />
             </SidebarContent>
