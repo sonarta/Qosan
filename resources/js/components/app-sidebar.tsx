@@ -15,8 +15,6 @@ import { Link } from '@inertiajs/react';
 import { 
     LayoutGrid, 
     MapPinHouse,
-    Settings,
-    HelpCircle,
     House,
     UsersRound,
     HandCoins,
@@ -121,13 +119,7 @@ const otherNavItems: NavItem[] = [
         title: 'Notifikasi',
         href: '/settings',
         icon: Bell
-    },
-    {
-        title: 'Pengaturan',
-        href: '/help',
-        icon: Settings,
-        hasChevron: true,
-    },
+    }
 ];
 
 export function AppSidebar() {

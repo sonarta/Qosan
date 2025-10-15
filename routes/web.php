@@ -20,6 +20,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('bills', \App\Http\Controllers\BillController::class);
     Route::get('bills/{bill}/pdf', [\App\Http\Controllers\BillController::class, 'generatePdf'])->name('bills.pdf');
     Route::patch('bills/{bill}/mark-paid', [\App\Http\Controllers\BillController::class, 'markAsPaid'])->name('bills.mark-paid');
+    
+    Route::get('payments', [\App\Http\Controllers\PaymentController::class, 'index'])->name('payments.index');
+    Route::post('payments', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payments.store');
+    Route::get('payments/pending/list', [\App\Http\Controllers\PaymentController::class, 'pending'])->name('payments.pending');
+    Route::get('payments/export/csv', [\App\Http\Controllers\PaymentController::class, 'export'])->name('payments.export');
+    Route::patch('payments/{payment}/confirm', [\App\Http\Controllers\PaymentController::class, 'confirm'])->name('payments.confirm');
+    Route::patch('payments/{payment}/reject', [\App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
+    
+    Route::get('finance/reports', [\App\Http\Controllers\FinanceReportController::class, 'index'])->name('finance.reports');
 });
 
 require __DIR__.'/settings.php';
