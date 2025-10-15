@@ -1,7 +1,7 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Search, Sun, Moon, Settings } from 'lucide-react';
+import { Search, Sun, Moon, Settings, Shield, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -9,6 +9,8 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { useInitials } from '@/hooks/use-initials';
@@ -25,13 +27,18 @@ const navItems = [
 
 export function AppSidebarHeader({
     breadcrumbs = [],
+    viewMode = 'admin',
+    onViewModeChange,
 }: {
     breadcrumbs?: BreadcrumbItemType[];
+    viewMode?: 'admin' | 'owner';
+    onViewModeChange?: (mode: 'admin' | 'owner') => void;
 }) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
+    const isAdmin = auth?.user?.role === 'admin';
 
     useEffect(() => {
         const isDark = document.documentElement.classList.contains('dark');
@@ -49,23 +56,52 @@ export function AppSidebarHeader({
             <div className="flex items-center gap-6">
                 <SidebarTrigger className="-ml-1" />
                 
-                {/* Navigation Items */}
-                <nav className="hidden md:flex items-center gap-1">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={cn(
-                                'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
-                                page.url === item.href
-                                    ? 'text-foreground'
-                                    : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                            )}
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </nav>
+                {/* Role Switcher for Admin */}
+                {isAdmin && onViewModeChange && (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-8 gap-2"
+                            >
+                                {viewMode === 'admin' ? (
+                                    <>
+                                        <Shield className="h-4 w-4" />
+                                        <span className="hidden sm:inline">Admin View</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <User className="h-4 w-4" />
+                                        <span className="hidden sm:inline">Owner View</span>
+                                    </>
+                                )}
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start">
+                            <DropdownMenuItem
+                                onClick={() => onViewModeChange('admin')}
+                                className={cn(
+                                    'cursor-pointer',
+                                    viewMode === 'admin' && 'bg-accent'
+                                )}
+                            >
+                                <Shield className="mr-2 h-4 w-4" />
+                                Admin View
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => onViewModeChange('owner')}
+                                className={cn(
+                                    'cursor-pointer',
+                                    viewMode === 'owner' && 'bg-accent'
+                                )}
+                            >
+                                <User className="mr-2 h-4 w-4" />
+                                Owner View
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )}
             </div>
 
             <div className="flex items-center gap-2">
