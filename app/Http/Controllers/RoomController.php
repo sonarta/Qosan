@@ -82,6 +82,24 @@ class RoomController extends Controller
      */
     public function store(RoomStoreRequest $request): RedirectResponse
     {
+        // Check subscription limits
+        $user = auth()->user();
+        $subscription = $user->subscription;
+        
+        if (!$subscription) {
+            return back()->withErrors(['error' => 'Anda belum memiliki paket langganan aktif.']);
+        }
+
+        $currentRooms = Room::whereHas('property', function ($query) use ($user) {
+            $query->where('owner_id', $user->id);
+        })->count();
+        
+        if ($currentRooms >= $subscription->max_rooms) {
+            return back()->withErrors([
+                'error' => "Anda telah mencapai batas maksimal kamar ({$subscription->max_rooms}). Silakan upgrade paket langganan Anda."
+            ]);
+        }
+
         DB::beginTransaction();
 
         try {

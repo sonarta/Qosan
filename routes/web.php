@@ -29,6 +29,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('payments/{payment}/reject', [\App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
     
     Route::get('finance/reports', [\App\Http\Controllers\FinanceReportController::class, 'index'])->name('finance.reports');
+    
+    Route::get('subscription', [\App\Http\Controllers\SubscriptionController::class, 'index'])->name('subscription.index');
 });
 
 require __DIR__.'/settings.php';

@@ -20,7 +20,8 @@ import {
     HandCoins,
     Receipt,
     ChartLine,
-    Bell
+    Bell,
+    Crown
     } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -116,6 +117,11 @@ const financeNavItems: NavItem[] = [
 
 const otherNavItems: NavItem[] = [
     {
+        title: 'Paket Langganan',
+        href: '/subscription',
+        icon: Crown
+    },
+    {
         title: 'Notifikasi',
         href: '/settings',
         icon: Bell
@@ -145,9 +151,6 @@ export function AppSidebar() {
                 <NavMain items={otherNavItems} label="Other" />
             </SidebarContent>
 
-            <SidebarFooter>
-                <NavUser />
-            </SidebarFooter>
         </Sidebar>
     );
 }
