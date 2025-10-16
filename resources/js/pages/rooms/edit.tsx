@@ -242,7 +242,7 @@ export default function RoomEdit({ room, properties }: RoomEditProps) {
                                 {existingImages.map((image) => (
                                     <div key={image.id} className="relative aspect-square">
                                         <img
-                                            src={`/storage/${image.path}`}
+                                            src={image.url}
                                             alt={image.filename}
                                             className="h-full w-full rounded-lg object-cover"
                                         />

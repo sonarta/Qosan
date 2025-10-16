@@ -64,7 +64,7 @@ export default function PropertyShow({ property }: PropertyShowProps) {
                         {property.images.map((image) => (
                             <div key={image.id} className="relative overflow-hidden rounded-lg border">
                                 <img
-                                    src={`/storage/${image.path}`}
+                                    src={image.url}
                                     alt={image.filename}
                                     className="h-48 w-full object-cover"
                                 />

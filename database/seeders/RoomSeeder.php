@@ -51,20 +51,33 @@ class RoomSeeder extends Seeder
                     'description' => "Kamar {$type} di lantai {$floor} dengan fasilitas lengkap.",
                 ]);
 
-                // Create sample images
+                // Create sample images using Picsum Photos (reliable placeholder)
+                // Using different seed for each image to get variety
+                $seed1 = ($room->id * 200) + 1;
+                $seed2 = ($room->id * 200) + 2;
+                $seed3 = ($room->id * 200) + 3;
+                
                 RoomImage::create([
                     'room_id' => $room->id,
-                    'path' => 'rooms/' . $room->slug . '/image-1.jpg',
-                    'filename' => 'image-1.jpg',
+                    'path' => "https://picsum.photos/seed/room-{$seed1}/800/600",
+                    'filename' => 'room-' . $room->id . '-1.jpg',
                     'order' => 1,
                     'is_primary' => true,
                 ]);
 
                 RoomImage::create([
                     'room_id' => $room->id,
-                    'path' => 'rooms/' . $room->slug . '/image-2.jpg',
-                    'filename' => 'image-2.jpg',
+                    'path' => "https://picsum.photos/seed/room-{$seed2}/800/600",
+                    'filename' => 'room-' . $room->id . '-2.jpg',
                     'order' => 2,
+                    'is_primary' => false,
+                ]);
+
+                RoomImage::create([
+                    'room_id' => $room->id,
+                    'path' => "https://picsum.photos/seed/room-{$seed3}/800/600",
+                    'filename' => 'room-' . $room->id . '-3.jpg',
+                    'order' => 3,
                     'is_primary' => false,
                 ]);
             }

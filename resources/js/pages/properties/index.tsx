@@ -224,7 +224,7 @@ export default function PropertiesIndex({
                                                 <div className="flex items-center gap-3">
                                                     {property.images?.[0] ? (
                                                         <img
-                                                            src={`/storage/${property.images[0].path}`}
+                                                            src={property.images[0].url}
                                                             alt={property.name}
                                                             className="h-12 w-12 rounded object-cover"
                                                         />

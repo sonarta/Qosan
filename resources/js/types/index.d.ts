@@ -52,6 +52,7 @@ export interface PropertyImage {
     filename: string;
     order: number;
     is_primary: boolean;
+    url: string; // Accessor for full image URL
     created_at: string;
     updated_at: string;
 }
@@ -87,6 +88,7 @@ export interface RoomImage {
     filename: string;
     order: number;
     is_primary: boolean;
+    url: string; // Accessor for full image URL
     created_at: string;
     updated_at: string;
 }

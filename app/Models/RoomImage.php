@@ -22,6 +22,13 @@ class RoomImage extends Model
     ];
 
     /**
+     * @var list<string>
+     */
+    protected $appends = [
+        'url',
+    ];
+
+    /**
      * @return array<string, string>
      */
     protected function casts(): array
@@ -35,5 +42,19 @@ class RoomImage extends Model
     public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
+    }
+
+    /**
+     * Get the full URL for the image
+     */
+    public function getUrlAttribute(): string
+    {
+        // If path is an external URL (starts with http:// or https://)
+        if (str_starts_with($this->path, 'http://') || str_starts_with($this->path, 'https://')) {
+            return $this->path;
+        }
+        
+        // Otherwise, use storage path
+        return asset('storage/' . $this->path);
     }
 }

@@ -19,7 +19,7 @@ import { Badge } from '@/components/ui/badge';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type PaginatedData, type Property, type Room } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
-import { Edit, Eye, House, MapPin, Plus, Search, Trash2, Users } from 'lucide-react';
+import { Edit, House, MapPin, Plus, Search, Trash2, Users } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -206,7 +206,7 @@ export default function RoomsIndex({
                                     <div className="relative aspect-video">
                                         {room.images && room.images.length > 0 ? (
                                             <img
-                                                src={`/storage/${room.images[0].path}`}
+                                                src={room.images[0].url}
                                                 alt={room.name}
                                                 className="h-full w-full object-cover"
                                             />

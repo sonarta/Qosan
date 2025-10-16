@@ -106,20 +106,33 @@ class PropertySeeder extends Seeder
                 'status' => $propertyData['status'],
             ]);
 
-            // Create sample images (placeholder paths)
+            // Create sample images using Picsum Photos (reliable placeholder)
+            // Using different seed for each image to get variety
+            $seed1 = ($property->id * 100) + 1;
+            $seed2 = ($property->id * 100) + 2;
+            $seed3 = ($property->id * 100) + 3;
+            
             PropertyImage::create([
                 'property_id' => $property->id,
-                'path' => 'properties/' . $property->slug . '/image-1.jpg',
-                'filename' => 'image-1.jpg',
+                'path' => "https://picsum.photos/seed/property-{$seed1}/800/600",
+                'filename' => 'property-' . $property->id . '-1.jpg',
                 'order' => 1,
                 'is_primary' => true,
             ]);
 
             PropertyImage::create([
                 'property_id' => $property->id,
-                'path' => 'properties/' . $property->slug . '/image-2.jpg',
-                'filename' => 'image-2.jpg',
+                'path' => "https://picsum.photos/seed/property-{$seed2}/800/600",
+                'filename' => 'property-' . $property->id . '-2.jpg',
                 'order' => 2,
+                'is_primary' => false,
+            ]);
+
+            PropertyImage::create([
+                'property_id' => $property->id,
+                'path' => "https://picsum.photos/seed/property-{$seed3}/800/600",
+                'filename' => 'property-' . $property->id . '-3.jpg',
+                'order' => 3,
                 'is_primary' => false,
             ]);
 
