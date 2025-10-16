@@ -8,6 +8,9 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Global Search API
+    Route::get('api/search', [\App\Http\Controllers\SearchController::class, 'search'])->name('api.search');
+    
     // Dynamic dashboard based on role
     Route::get('dashboard', function () {
         if (auth()->user()->isAdmin()) {
@@ -42,6 +45,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         // Payment History
         Route::get('payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
+        
+        // Analytics & Reports
+        Route::get('revenue-report', [\App\Http\Controllers\Admin\RevenueReportController::class, 'index'])->name('revenue-report');
+        Route::get('platform-analytics', [\App\Http\Controllers\Admin\PlatformAnalyticsController::class, 'index'])->name('platform-analytics');
+        Route::get('churn-analysis', [\App\Http\Controllers\Admin\ChurnAnalysisController::class, 'index'])->name('churn-analysis');
     });
 
     Route::resource('properties', \App\Http\Controllers\PropertyController::class);

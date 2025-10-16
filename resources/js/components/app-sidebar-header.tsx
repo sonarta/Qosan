@@ -1,29 +1,21 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
-import { Link, usePage } from '@inertiajs/react';
-import { Search, Sun, Moon, Settings, Shield, User } from 'lucide-react';
+import { usePage } from '@inertiajs/react';
+import { Sun, Moon, Settings, Shield, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
     DropdownMenuItem,
-    DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { UserMenuContent } from '@/components/user-menu-content';
+import { CommandPalette } from '@/components/command-palette';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type SharedData } from '@/types';
 import { useState, useEffect } from 'react';
-
-const navItems = [
-    { title: 'Overview', href: '/dashboard' },
-    { title: 'Customers', href: '/customers' },
-    { title: 'Products', href: '/products' },
-    { title: 'Settings', href: '/settings' },
-];
 
 export function AppSidebarHeader({
     breadcrumbs = [],
@@ -131,17 +123,9 @@ export function AppSidebarHeader({
             </div>
 
             <div className="flex items-center gap-2">
-                {/* Search Input */}
-                <div className="relative hidden sm:block">
-                    <Search className="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                        type="search"
-                        placeholder="Search"
-                        className="h-9 w-[200px] pl-8 pr-12 bg-background"
-                    />
-                    <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                        ⌘K
-                    </kbd>
+                {/* Command Palette */}
+                <div className="hidden sm:block">
+                    <CommandPalette />
                 </div>
 
                 {/* Theme Toggle */}

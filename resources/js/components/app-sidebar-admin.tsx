@@ -1,9 +1,7 @@
 import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
@@ -118,17 +116,17 @@ const subscriptionNavItems: NavItem[] = [
 const financeNavItems: NavItem[] = [
     {
         title: 'Revenue Report',
-        href: '/revenue-report',
+        href: '/admin/revenue-report',
         icon: ChartLine,
     },
     {
         title: 'Platform Analytics',
-        href: '/platform-analytics',
+        href: '/admin/platform-analytics',
         icon: ChartLine,
     },
     {
         title: 'Churn Analysis',
-        href: '/churn-analysis',
+        href: '/admin/churn-analysis',
         icon: ChartLine,
     },
 ];

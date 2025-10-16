@@ -13,28 +13,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            SubscriptionPackageSeeder::class,
+            SubscriptionSeeder::class,
+            PropertySeeder::class,
+            RoomSeeder::class,
+            TenantSeeder::class,
+            BillSeeder::class,
+            PaymentSeeder::class,
+            BillingSettingSeeder::class,
+        ]);
 
-        // Create Admin User
-        User::firstOrCreate(
-            ['email' => 'admin@example.com'],
-            [
-                'name' => 'admin',
-                'password' => 'password',
-                'email_verified_at' => now(),
-                'role' => 'admin',
-            ]
-        );
-
-        // Create Owner User
-        User::firstOrCreate(
-            ['email' => 'owner@example.com'],
-            [
-                'name' => 'Owner User',
-                'password' => 'password',
-                'email_verified_at' => now(),
-                'role' => 'owner',
-            ]
-        );
+        $this->command->info('🎉 All seeders completed successfully!');
+        $this->command->info('📧 Default login credentials:');
+        $this->command->info('   Admin: admin@qosan.com / password');
+        $this->command->info('   Owner: budi@owner.com / password');
     }
 }
