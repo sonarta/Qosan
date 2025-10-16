@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import {
     CommandDialog,
     CommandEmpty,
@@ -26,6 +26,7 @@ import {
     type LucideIcon,
 } from 'lucide-react';
 import axios from 'axios';
+import { type SharedData } from '@/types';
 
 interface SearchResult {
     type: 'property' | 'tenant' | 'bill' | 'payment' | 'owner';
@@ -50,6 +51,9 @@ interface QuickAction {
 }
 
 export function CommandPalette() {
+    const { auth } = usePage<SharedData>().props;
+    const isAdmin = auth?.user?.role === 'admin';
+    
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -337,22 +341,24 @@ export function CommandPalette() {
                         })}
                     </CommandGroup>
 
-                    {/* Admin Navigation */}
-                    <CommandGroup heading="Admin">
-                        {adminNavigationItems.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                                <CommandItem
-                                    key={item.url}
-                                    onSelect={() => handleSelect(item.url)}
-                                    keywords={item.keywords}
-                                >
-                                    <Icon className="mr-2 h-4 w-4" />
-                                    <span>{item.title}</span>
-                                </CommandItem>
-                            );
-                        })}
-                    </CommandGroup>
+                    {/* Admin Navigation - Only for Admin */}
+                    {isAdmin && (
+                        <CommandGroup heading="Admin">
+                            {adminNavigationItems.map((item) => {
+                                const Icon = item.icon;
+                                return (
+                                    <CommandItem
+                                        key={item.url}
+                                        onSelect={() => handleSelect(item.url)}
+                                        keywords={item.keywords}
+                                    >
+                                        <Icon className="mr-2 h-4 w-4" />
+                                        <span>{item.title}</span>
+                                    </CommandItem>
+                                );
+                            })}
+                        </CommandGroup>
+                    )}
                 </CommandList>
             </CommandDialog>
         </>

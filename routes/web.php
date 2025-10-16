@@ -19,8 +19,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return app(\App\Http\Controllers\DashboardController::class)->index();
     })->name('dashboard');
 
-    // Admin Routes
-    Route::prefix('admin')->name('admin.')->group(function () {
+    // Admin Routes (Protected by admin middleware)
+    Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
         Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
         
         // Owner Management
