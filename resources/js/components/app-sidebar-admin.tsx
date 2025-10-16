@@ -72,45 +72,45 @@ const userManagementNavItems: NavItem[] = [
 const subscriptionNavItems: NavItem[] = [
    {
         title: 'Paket Langganan',
-        href: '/packages',
+        href: '/admin/packages',
         icon: Receipt,
         items: [
             {
                 title: 'Daftar Paket',
-                href: '/packages',
+                href: '/admin/packages',
             },
             {
                 title: 'Buat Paket Baru',
-                href: '/packages/create',
+                href: '/admin/packages/create',
             }
         ],
     },
     {
         title: 'Subscriptions',
-        href: '/subscriptions',
-        icon: Receipt,
+        href: '/admin/subscriptions',
+        icon: Crown,
         items: [
             {
                 title: 'Semua Subscriptions',
-                href: '/subscriptions',
+                href: '/admin/subscriptions',
             },
             {
                 title: 'Aktif',
-                href: '/subscriptions/active',
+                href: '/admin/subscriptions?status=active',
             },
             {
                 title: 'Akan Expire',
-                href: '/subscriptions/expiring',
+                href: '/admin/subscriptions?status=expiring',
             },
             {
                 title: 'Expired',
-                href: '/subscriptions/expired',
+                href: '/admin/subscriptions?status=expired',
             }
         ],
     },
     {
         title: 'Payment History',
-        href: '/payments',
+        href: '/admin/payments',
         icon: HandCoins,
     }
 ];

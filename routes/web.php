@@ -33,6 +33,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Tenants (Read-only)
         Route::get('tenants', [\App\Http\Controllers\Admin\TenantController::class, 'index'])->name('tenants.index');
         Route::get('tenants/{tenant}', [\App\Http\Controllers\Admin\TenantController::class, 'show'])->name('tenants.show');
+        
+        // Subscription Package Management
+        Route::resource('packages', \App\Http\Controllers\Admin\SubscriptionPackageController::class);
+        
+        // Subscription Monitoring
+        Route::get('subscriptions', [\App\Http\Controllers\Admin\SubscriptionMonitoringController::class, 'index'])->name('subscriptions.index');
+        
+        // Payment History
+        Route::get('payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
     });
 
     Route::resource('properties', \App\Http\Controllers\PropertyController::class);

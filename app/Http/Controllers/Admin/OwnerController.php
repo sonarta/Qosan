@@ -64,7 +64,20 @@ class OwnerController extends Controller
 
     public function create(): Response
     {
-        $plans = Subscription::getPlans();
+        $packages = \App\Models\SubscriptionPackage::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $plans = [];
+        foreach ($packages as $package) {
+            $plans[$package->slug] = [
+                'name' => $package->name,
+                'price' => $package->price,
+                'max_properties' => $package->max_properties,
+                'max_rooms' => $package->max_rooms,
+                'features' => $package->features,
+            ];
+        }
 
         return Inertia::render('admin/owners/create', [
             'plans' => $plans,
@@ -93,14 +106,17 @@ class OwnerController extends Controller
             ]);
 
             // Create subscription
-            $plans = Subscription::getPlans();
-            $selectedPlan = $plans[$validated['plan_name']];
+            $package = \App\Models\SubscriptionPackage::where('slug', $validated['plan_name'])->first();
+
+            if (!$package) {
+                throw new \Exception('Paket tidak ditemukan');
+            }
 
             Subscription::create([
                 'user_id' => $user->id,
-                'plan_name' => $validated['plan_name'],
-                'max_properties' => $selectedPlan['max_properties'],
-                'max_rooms' => $selectedPlan['max_rooms'],
+                'plan_name' => $package->slug,
+                'max_properties' => $package->max_properties,
+                'max_rooms' => $package->max_rooms,
                 'start_date' => now(),
                 'status' => 'active',
             ]);
@@ -118,7 +134,21 @@ class OwnerController extends Controller
     public function edit(User $owner): Response
     {
         $owner->load('subscription');
-        $plans = Subscription::getPlans();
+        
+        $packages = \App\Models\SubscriptionPackage::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $plans = [];
+        foreach ($packages as $package) {
+            $plans[$package->slug] = [
+                'name' => $package->name,
+                'price' => $package->price,
+                'max_properties' => $package->max_properties,
+                'max_rooms' => $package->max_rooms,
+                'features' => $package->features,
+            ];
+        }
 
         return Inertia::render('admin/owners/edit', [
             'owner' => $owner,
@@ -196,24 +226,27 @@ class OwnerController extends Controller
         DB::beginTransaction();
 
         try {
-            $plans = Subscription::getPlans();
-            $selectedPlan = $plans[$validated['plan_name']];
+            $package = \App\Models\SubscriptionPackage::where('slug', $validated['plan_name'])->first();
+
+            if (!$package) {
+                throw new \Exception('Paket tidak ditemukan');
+            }
 
             // Update or create subscription
             $subscription = $owner->subscription()->first();
             
             if ($subscription) {
                 $subscription->update([
-                    'plan_name' => $validated['plan_name'],
-                    'max_properties' => $selectedPlan['max_properties'],
-                    'max_rooms' => $selectedPlan['max_rooms'],
+                    'plan_name' => $package->slug,
+                    'max_properties' => $package->max_properties,
+                    'max_rooms' => $package->max_rooms,
                 ]);
             } else {
                 Subscription::create([
                     'user_id' => $owner->id,
-                    'plan_name' => $validated['plan_name'],
-                    'max_properties' => $selectedPlan['max_properties'],
-                    'max_rooms' => $selectedPlan['max_rooms'],
+                    'plan_name' => $package->slug,
+                    'max_properties' => $package->max_properties,
+                    'max_rooms' => $package->max_rooms,
                     'start_date' => now(),
                     'status' => 'active',
                 ]);
