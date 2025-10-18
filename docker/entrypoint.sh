@@ -6,8 +6,10 @@ echo "Starting Qosan Application..."
 # Set default APP_PORT if not set
 APP_PORT=${APP_PORT:-8000}
 
-# Replace APP_PORT in nginx config
-sed -i "s/\${APP_PORT}/$APP_PORT/g" /etc/nginx/http.d/default.conf
+# Generate nginx config with correct port
+echo "Configuring Nginx to listen on port $APP_PORT..."
+sed "s/APP_PORT_PLACEHOLDER/$APP_PORT/g" /etc/nginx/http.d/default.conf > /tmp/default.conf
+mv /tmp/default.conf /etc/nginx/http.d/default.conf
 
 # Wait for database to be ready
 if [ "$DB_CONNECTION" = "mysql" ]; then
