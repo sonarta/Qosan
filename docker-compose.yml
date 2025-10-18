@@ -41,6 +41,7 @@ services:
       - redis
     networks:
       - qosan-network
+      - dokploy-network
 
   db:
     image: mysql:8.0
@@ -91,3 +92,5 @@ volumes:
 networks:
   qosan-network:
     driver: bridge
+  dokploy-network:
+    external: true
