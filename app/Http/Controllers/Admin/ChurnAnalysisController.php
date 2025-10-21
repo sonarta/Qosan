@@ -210,7 +210,7 @@ class ChurnAnalysisController extends Controller
                 'users.email',
                 'subscriptions.plan_name',
                 'subscriptions.end_date',
-                DB::raw("CAST((julianday(subscriptions.end_date) - julianday('now')) AS INTEGER) as days_until_expiry")
+                DB::raw("DATEDIFF(subscriptions.end_date, NOW()) as days_until_expiry")
             )
             ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
             ->where('users.role', 'owner')
