@@ -222,7 +222,7 @@ class RevenueReportController extends Controller
             
             $revenue = Payment::where('status', 'confirmed')
                 ->whereYear('payment_date', $year)
-                ->whereRaw("CAST(strftime('%m', payment_date) AS INTEGER) BETWEEN ? AND ?", [$startMonth, $endMonth])
+                ->whereRaw("MONTH(payment_date) BETWEEN ? AND ?", [$startMonth, $endMonth])
                 ->sum('amount');
 
             $quarters[] = [
